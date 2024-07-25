@@ -13,7 +13,7 @@ interface UserProps {
   updatedAt?: Date;
 }
 
-type UserPropsEntry = Replace<UserProps, {
+type UserPropsBody = Replace<UserProps, {
   id?: string;
   createdAt?: Date;
 }>
@@ -21,7 +21,7 @@ type UserPropsEntry = Replace<UserProps, {
 export class User {
   private props: UserProps;
 
-  constructor(props: UserPropsEntry) {
+  constructor(props: UserPropsBody) {
     props.id = props.id ?? randomUUID()
     props.createdAt = props.createdAt ?? new Date()
     if(props.updatedAt && props.updatedAt > props.createdAt) {
