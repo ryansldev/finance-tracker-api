@@ -19,13 +19,13 @@ describe('Entry', () => {
     })
 
     const entryCategory = new EntryCategory({
-      title: 'Transport',
+      title: 'Work',
       color: '#000',
     })
 
     const entry = new Entry({
-      title: 'Passport',
-      value: 300,
+      title: 'Paycheck',
+      value: 4000,
       dashboardId: dashboard.id,
       categoryId: entryCategory.id,
     })

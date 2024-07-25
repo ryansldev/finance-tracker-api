@@ -4,7 +4,7 @@ import { EntryCategory } from './entry-category'
 describe('Entry Category', () => {
   it('should be able to create a entry category', () => {
     const entryCategory = new EntryCategory({
-      title: 'Transport',
+      title: 'Work',
       color: '#000',
     })
 
