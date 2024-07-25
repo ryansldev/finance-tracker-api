@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  name       String
+  lastname   String
+  email      String      @unique
+  password   String
+  dashboards Dashboard[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Dashboard {
+  id          String  @id @default(uuid())
+  title       String
+  description String?
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  entries Entry[]
+  outputs Output[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Entry {
+  id          String   @id @default(uuid())
+  date        DateTime @default(now())
+  value       Float
+  description String?
+
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  dashboardId String
+
+  category   EntryCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+}
+
+model EntryCategory {
+  id      String  @id @default(uuid())
+  title   String
+  color   String
+  entries Entry[]
+}
+
+model Output {
+  id          String   @id @default(uuid())
+  date        DateTime @default(now())
+  value       Float
+  description String?
+
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  dashboardId String
+
+  category   OutputCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+}
+
+model OutputCategory {
+  id      String   @id @default(uuid())
+  title   String
+  color   String
+  outputs Output[]
+}
