@@ -12,8 +12,9 @@ export class InMemoryDashboardsRepository implements DashboardsRepository {
     return this.items.find((dashboard) => dashboard.id === dashboardId)
   }
 
-  async list(): Promise<Dashboard[]> {
-    return this.items.sort((a, b) => {
+  async list(authorId: string): Promise<Dashboard[]> {
+    const dashboards = this.items.filter((dashboard) => dashboard.authorId === authorId)
+    return dashboards.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
   }

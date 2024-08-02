@@ -32,6 +32,10 @@ export class Dashboard {
     return this.props.id;
   }
 
+  get authorId(): string {
+    return this.props.authorId;
+  }
+
   get title(): string {
     return this.props.title;
   }
