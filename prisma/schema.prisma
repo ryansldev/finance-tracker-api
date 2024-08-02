@@ -51,7 +51,7 @@ model Entry {
 
 model EntryCategory {
   id      String  @id @default(uuid())
-  title   String
+  title   String  @unique
   color   String
   entries Entry[]
 }
@@ -71,7 +71,7 @@ model Output {
 
 model OutputCategory {
   id      String   @id @default(uuid())
-  title   String
+  title   String   @unique
   color   String
   outputs Output[]
 }
