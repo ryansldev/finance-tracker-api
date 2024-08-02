@@ -12,16 +12,16 @@ describe('Create Dashboard', () => {
     const createUser = new CreateUser(usersRepository)
     const sut = new CreateDashboard(dashboardsRepository)
 
-    const user = await createUser.execute({
-      name: "John",
-      lastname: "Doe",
-      email: "johndoe@gmail.com",
-      password: "johndoe123"
+    const author = await createUser.execute({
+      name: 'John',
+      lastname: 'Doe',
+      email: 'johndoe@gmail.com',
+      password: 'johndoe123'
     })
 
     expect(sut.execute({
-      title: "Personal Finances",
-      authorId: user.id,
+      title: 'Personal Finances',
+      authorId: author.id,
     })).resolves.toBeInstanceOf(Dashboard)
   })
 })
