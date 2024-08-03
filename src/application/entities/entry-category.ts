@@ -5,6 +5,7 @@ interface EntryCategoryProps {
   id: string;
   title: string;
   color: string;
+  dashboardId: string;
 }
 
 type EntryCategoryPropsBody = Replace<EntryCategoryProps, {
@@ -23,6 +24,10 @@ export class EntryCategory {
 
   get id(): string {
     return this.props.id
+  }
+
+  get dashboardId(): string {
+    return this.props.dashboardId
   }
 
   get title(): string {

@@ -5,6 +5,7 @@ interface OutputCategoryProps {
   id: string;
   title: string;
   color: string;
+  dashboardId: string;
 }
 
 type OutputCategoryPropsBody = Replace<OutputCategoryProps, {
@@ -23,6 +24,10 @@ export class OutputCategory {
 
   get id(): string {
     return this.props.id
+  }
+
+  get dashboardId(): string {
+    return this.props.dashboardId
   }
 
   get title(): string {

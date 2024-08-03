@@ -33,6 +33,6 @@ describe('Create User', () => {
       lastname: 'Doe',
       email: 'johndoe@gmail.com',
       password: 'johndoe123'
-    })).rejects.toBeInstanceOf(UserAlreadyExists)
+    })).rejects.toThrowError(UserAlreadyExists)
   })
 })

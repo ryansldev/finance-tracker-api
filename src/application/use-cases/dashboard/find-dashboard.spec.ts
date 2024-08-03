@@ -34,6 +34,6 @@ describe('Find Dashboard', () => {
     const dashboardsRepository = new InMemoryDashboardsRepository()
     const sut = new FindDashboard(dashboardsRepository)
 
-    expect(sut.execute({ id: '1' })).rejects.toBeInstanceOf(DashboardNotFound)
+    expect(sut.execute({ id: '1' })).rejects.toThrowError(DashboardNotFound)
   })
 })

@@ -5,5 +5,6 @@ export interface EntryCategoriesRepository {
   delete(entryCategoryId: EntryCategory['id']): Promise<void>
   list(): Promise<EntryCategory[]>
   search(titleToSearch: string): Promise<EntryCategory[]>
+  findByTitle(title: string): Promise<EntryCategory>
   save(entryCategory: EntryCategory): Promise<void>
 }

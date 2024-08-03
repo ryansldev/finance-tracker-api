@@ -25,6 +25,6 @@ describe('Find User', () => {
     const usersRepository = new InMemoryUsersRepository()
     const sut = new FindUser(usersRepository)
 
-    expect(sut.execute({ id: '1' })).rejects.toBeInstanceOf(UserNotFound)
+    expect(sut.execute({ id: '1' })).rejects.toThrowError(UserNotFound)
   })
 })
