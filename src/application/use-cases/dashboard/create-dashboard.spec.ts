@@ -10,7 +10,7 @@ describe('Create Dashboard', () => {
     const dashboardsRepository = new InMemoryDashboardsRepository()
     const usersRepository = new InMemoryUsersRepository()
     const createUser = new CreateUser(usersRepository)
-    const sut = new CreateDashboard(dashboardsRepository)
+    const sut = new CreateDashboard(usersRepository, dashboardsRepository)
 
     const author = await createUser.execute({
       name: 'John',

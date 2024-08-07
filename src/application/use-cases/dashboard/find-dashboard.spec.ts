@@ -11,7 +11,7 @@ describe('Find Dashboard', () => {
   it('should be able to find a dashboard that already exists', async () => {
     const dashboardsRepository = new InMemoryDashboardsRepository()
     const usersRepository = new InMemoryUsersRepository()
-    const createDashboard = new CreateDashboard(dashboardsRepository)
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const createUser = new CreateUser(usersRepository)
     const sut = new FindDashboard(dashboardsRepository)
 

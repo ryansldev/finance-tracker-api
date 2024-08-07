@@ -18,7 +18,7 @@ describe('Create Entry Category', () => {
     const entryCategoryRepository = new InMemoryEntryCategoriesRepository()
 
     const createUser = new CreateUser(usersRepository)
-    const createDashboard = new CreateDashboard(dashboardsRepository)
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const sut = new CreateEntryCategory(dashboardsRepository, entryCategoryRepository)
 
     const author = await createUser.execute({

@@ -13,7 +13,7 @@ describe('List User Dashboards', () => {
     const dashboardsRepository = new InMemoryDashboardsRepository()
     const usersRepository = new InMemoryUsersRepository()
 
-    const createDashboard = new CreateDashboard(dashboardsRepository)
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const createUser = new CreateUser(usersRepository)
     const sut = new ListUserDashboards(dashboardsRepository)
 

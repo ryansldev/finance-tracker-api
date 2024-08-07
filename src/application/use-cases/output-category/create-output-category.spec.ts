@@ -17,7 +17,7 @@ describe('Create Output Category', () => {
     const outputCategoriesRepository = new InMemoryOutputCategoriesRepository()
 
     const createUser = new CreateUser(usersRepository)
-    const createDashboard = new CreateDashboard(dashboardsRepository)
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const sut = new CreateOutputCategory(dashboardsRepository, outputCategoriesRepository)
 
     const user = await createUser.execute({

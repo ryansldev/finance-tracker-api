@@ -15,7 +15,7 @@ describe('Search Entry Category', () => {
     const entryCategoriesRepository = new InMemoryEntryCategoriesRepository()
 
     const createUser = new CreateUser(usersRepository)
-    const createDashboard = new CreateDashboard(dashboardsRepository)
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const createEntryCategory = new CreateEntryCategory(dashboardsRepository, entryCategoriesRepository)
     const sut = new SearchEntryCategory(entryCategoriesRepository)
 
