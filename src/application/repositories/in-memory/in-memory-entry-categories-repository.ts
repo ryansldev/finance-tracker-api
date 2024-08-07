@@ -14,7 +14,7 @@ export class InMemoryEntryCategoriesRepository implements EntryCategoriesReposit
   }
 
   async search(titleToSearch: string): Promise<EntryCategory[]> {
-    return this.items.filter((category) => category.title.includes(titleToSearch))
+    return this.items.filter((category) => category.title.toLowerCase().includes(titleToSearch.toLowerCase()))
   }
 
   async findByTitle(title: string): Promise<EntryCategory> {
