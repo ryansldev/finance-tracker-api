@@ -17,8 +17,12 @@ export class InMemoryEntryCategoriesRepository implements EntryCategoriesReposit
     return this.items.filter((category) => category.title.toLowerCase().includes(titleToSearch.toLowerCase()))
   }
 
-  async findByTitle(title: string): Promise<EntryCategory> {
+  async findByTitle(title: string): Promise<EntryCategory | undefined> {
     return this.items.filter((category) => category.title === title)[0]
+  }
+
+  async find(id: string): Promise<EntryCategory | undefined> {
+    return this.items.find((category) => category.id === id)
   }
 
   async save(user: EntryCategory): Promise<void> {
