@@ -10,6 +10,8 @@ interface CreateOutputCategoryRequest {
   dashboardId: string;
 }
 
+type CreateOutputCategoryResponse = OutputCategory
+
 export class CreateOutputCategory {
   constructor (
     private dashboardsRepository: DashboardsRepository,
@@ -20,7 +22,7 @@ export class CreateOutputCategory {
     title,
     color,
     dashboardId
-  }: CreateOutputCategoryRequest) {
+  }: CreateOutputCategoryRequest): Promise<CreateOutputCategoryResponse> {
     const dashboard = await this.dashboardsRepository.find(dashboardId)
     if(!dashboard) throw new DashboardNotFound();
 
