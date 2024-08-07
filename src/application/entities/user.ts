@@ -10,12 +10,13 @@ interface UserProps {
   email: string;
   password: string;
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt: Date;
 }
 
 type UserPropsBody = Replace<UserProps, {
   id?: string;
   createdAt?: Date;
+  updatedAt?: Date;
 }>
 
 export class User {
@@ -24,6 +25,7 @@ export class User {
   constructor(props: UserPropsBody) {
     props.id = props.id ?? randomUUID()
     props.createdAt = props.createdAt ?? new Date()
+    props.updatedAt = props.updatedAt ?? new Date()
     if(props.updatedAt && props.updatedAt > props.createdAt) {
       throw new BadRequestError("Invalid update date")
     }
@@ -77,7 +79,7 @@ export class User {
     return this.props.createdAt
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date {
     return this.props.updatedAt
   }
 

@@ -1,11 +1,10 @@
 import 'dotenv/config'
 import Fastify from 'fastify'
+import routes from './routes'
 
 const app = Fastify()
 
-app.get('/', (_request, reply) => {
-  reply.status(200).send({ hello: 'world' })
-})
+app.register(routes)
 
 const port = Number(process.env.PORT ?? 3333)
 app.listen({ port }, (err, host) => {
