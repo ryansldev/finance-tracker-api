@@ -17,6 +17,10 @@ export class InMemoryOutputCategoriesRepository implements OutputCategoriesRepos
     return this.items.filter((category) => category.title.includes(titleToSearch))
   }
 
+  async find(id: string): Promise<OutputCategory | undefined> {
+    return this.items.find((category) => category.id === id)
+  }
+
   async save(user: OutputCategory): Promise<void> {
     const index = this.items.indexOf(user)
     if (index !== -1) {
