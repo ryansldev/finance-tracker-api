@@ -1,11 +1,17 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { CreateUser } from '../../../application/use-cases/user/create-user'
 import { z } from 'zod'
+import { FastifyReply, FastifyRequest } from 'fastify'
+import { UsersRepository } from '../../../application/repositories/users-repository'
+import { CreateUser } from '../../../application/use-cases/user/create-user'
+
 
 export class UsersController {
+  private createUser: CreateUser;
+
   constructor(
-    private createUser: CreateUser,
-  ) {}
+    private usersRepository: UsersRepository,
+  ) {
+    this.createUser = new CreateUser(this.usersRepository)
+  }
 
   async create(request: FastifyRequest, reply: FastifyReply) {
     console.log(this.createUser)

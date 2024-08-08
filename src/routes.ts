@@ -7,14 +7,11 @@ const prisma = new PrismaClient({
 })
 
 import { PrismaUsersRepository } from './infra/database/prisma/repositories/prisma-users-repository'
+
 import { UsersController } from "./infra/http/controllers/users.controller"
-import { CreateUser } from './application/use-cases/user/create-user'
 
 const usersRepository = new PrismaUsersRepository(prisma)
-
-const createUser = new CreateUser(usersRepository)
-
-const usersController = new UsersController(createUser)
+const usersController = new UsersController(usersRepository)
 
 async function routes (app: FastifyInstance) {
   app.post('/users', (request, reply) => usersController.create(request, reply))
