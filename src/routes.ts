@@ -15,7 +15,13 @@ const usersController = new UsersController(usersRepository)
 
 async function routes (app: FastifyInstance) {
   app.post('/users', (request, reply) => usersController.create(request, reply))
-  app.get('/users/:id', (request, reply) => usersController.find(request, reply))
+  app.get('/users/:id', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => usersController.find(request, reply))
+  app.post('/auth', (request, reply) => usersController.auth(request, reply))
+  app.delete('/auth', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => usersController.logout(request, reply))
 }
 
 export default routes

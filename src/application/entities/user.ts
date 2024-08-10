@@ -43,6 +43,10 @@ export class User {
     this.props.password = hash
   }
 
+  async isPasswordMatching(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password)
+  }
+
   get id(): string {
     return this.props.id
   }
