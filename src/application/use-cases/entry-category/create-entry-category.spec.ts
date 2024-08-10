@@ -50,7 +50,6 @@ describe('Create Entry Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: '123',
-      authorId: '123',
     })).rejects.toThrowError(DashboardNotFound)
   })
 })

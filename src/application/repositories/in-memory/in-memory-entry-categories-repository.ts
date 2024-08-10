@@ -13,8 +13,9 @@ export class InMemoryEntryCategoriesRepository implements EntryCategoriesReposit
     return this.items.sort((a, b) => a.title.localeCompare(b.title))
   }
 
-  async search(titleToSearch: string): Promise<EntryCategory[]> {
-    return this.items.filter((category) => category.title.toLowerCase().includes(titleToSearch.toLowerCase()))
+  async search(dashboardId: string, titleToSearch: string): Promise<EntryCategory[]> {
+    const entryCategoriesFromDashboard = this.items.filter((entryCategory) => entryCategory.dashboardId === dashboardId)
+    return entryCategoriesFromDashboard.filter((category) => category.title.toLowerCase().includes(titleToSearch.toLowerCase()))
   }
 
   async findByTitle(title: string): Promise<EntryCategory | undefined> {

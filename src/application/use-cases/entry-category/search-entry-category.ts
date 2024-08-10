@@ -2,6 +2,7 @@ import { EntryCategory } from "../../entities/entry-category";
 import { EntryCategoriesRepository } from "../../repositories/entry-categories-repository";
 
 interface SearchEntryCategoryRequest {
+  dashboardId: string;
   titleToSearch: string;
 }
 
@@ -12,7 +13,7 @@ export class SearchEntryCategory {
     private entryCategoriesRepository: EntryCategoriesRepository
   ) {}
 
-  async execute({ titleToSearch }: SearchEntryCategoryRequest): Promise<SearchEntryCategoryResponse> {
-    return this.entryCategoriesRepository.search(titleToSearch)
+  async execute({ dashboardId, titleToSearch }: SearchEntryCategoryRequest): Promise<SearchEntryCategoryResponse> {
+    return this.entryCategoriesRepository.search(dashboardId, titleToSearch)
   }
 }

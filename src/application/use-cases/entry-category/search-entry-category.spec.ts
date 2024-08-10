@@ -38,10 +38,12 @@ describe('Search Entry Category', () => {
     })
 
     expect(sut.execute({
+      dashboardId: dashboard.id,
       titleToSearch: 'search'
     })).resolves.toEqual([])
 
     expect(sut.execute({
+      dashboardId: dashboard.id,
       titleToSearch: 'Tra'
     })).resolves.toEqual([entryCategory])
   })
