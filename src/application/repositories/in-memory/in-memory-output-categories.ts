@@ -8,9 +8,10 @@ export class InMemoryOutputCategoriesRepository implements OutputCategoriesRepos
     this.items.push(outputCategory)
   }
 
-  async list(): Promise<OutputCategory[]> {
+  async list(dashboardId: string): Promise<OutputCategory[]> {
+    const items = this.items.filter((outputCategory) => outputCategory.dashboardId === dashboardId)
     // LIST BY ALPHABETICAL ORDER
-    return this.items.sort((a, b) => a.title.localeCompare(b.title))
+    return items.sort((a, b) => a.title.localeCompare(b.title))
   }
 
   async search(titleToSearch: string): Promise<OutputCategory[]> {
