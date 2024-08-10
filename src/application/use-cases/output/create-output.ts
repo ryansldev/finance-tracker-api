@@ -14,6 +14,7 @@ interface CreateOutputRequest {
   date: Date;
   categoryId: string;
   dashboardId: string;
+  authorId: string;
 }
 
 type CreateOutputResponse = Output
@@ -31,9 +32,10 @@ export class CreateOutput {
     value,
     date,
     categoryId,
-    dashboardId
+    dashboardId,
+    authorId,
   }: CreateOutputRequest): Promise<CreateOutputResponse> {
-    const dashboardAlreadyExists = await this.dashboardsRepository.find(dashboardId)
+    const dashboardAlreadyExists = await this.dashboardsRepository.find(dashboardId, authorId)
     if(!dashboardAlreadyExists) throw new DashboardNotFound()
 
     const categoryAlreadyExists = await this.outputCategoriesRepository.find(categoryId)

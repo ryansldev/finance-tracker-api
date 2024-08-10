@@ -20,7 +20,7 @@ describe('Create Output Category', () => {
     const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const sut = new CreateOutputCategory(dashboardsRepository, outputCategoriesRepository)
 
-    const user = await createUser.execute({
+    const author = await createUser.execute({
       name: 'John',
       lastname: 'Doe',
       email: 'johndoe@gmail.com',
@@ -29,13 +29,14 @@ describe('Create Output Category', () => {
 
     const dashboard = await createDashboard.execute({
       title: 'Personal Finances',
-      authorId: user.id,
+      authorId: author.id,
     })
 
     expect(sut.execute({
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
+      authorId: author.id,
     })).resolves.toBeInstanceOf(OutputCategory)
   })
 })

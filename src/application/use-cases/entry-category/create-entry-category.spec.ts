@@ -37,6 +37,7 @@ describe('Create Entry Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
+      authorId: author.id,
     })).resolves.toBeInstanceOf(EntryCategory)
   })
 
@@ -50,6 +51,7 @@ describe('Create Entry Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: '123',
+      authorId: '123',
     })).rejects.toThrowError(DashboardNotFound)
   })
 })

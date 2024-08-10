@@ -8,6 +8,7 @@ interface CreateOutputCategoryRequest {
   title: string;
   color: string;
   dashboardId: string;
+  authorId: string;
 }
 
 type CreateOutputCategoryResponse = OutputCategory
@@ -21,9 +22,10 @@ export class CreateOutputCategory {
   async execute({
     title,
     color,
-    dashboardId
+    dashboardId,
+    authorId,
   }: CreateOutputCategoryRequest): Promise<CreateOutputCategoryResponse> {
-    const dashboard = await this.dashboardsRepository.find(dashboardId)
+    const dashboard = await this.dashboardsRepository.find(dashboardId, authorId)
     if(!dashboard) throw new DashboardNotFound();
 
     const outputCategory = new OutputCategory({

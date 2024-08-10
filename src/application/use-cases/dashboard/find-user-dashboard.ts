@@ -4,6 +4,7 @@ import { DashboardNotFound } from './errors/DashboardNotFound'
 
 interface FindDashboardRequest {
   id: string;
+  authorId: string;
 }
 
 type FindDashboardResponse = Dashboard
@@ -14,9 +15,10 @@ export class FindDashboard {
   ) {}
 
   async execute({
-    id
+    id,
+    authorId
   }: FindDashboardRequest): Promise<FindDashboardResponse> {
-    const dashboard = await this.dashboardsRepository.find(id)
+    const dashboard = await this.dashboardsRepository.find(id, authorId)
     if(!dashboard) throw new DashboardNotFound();
 
     return dashboard
