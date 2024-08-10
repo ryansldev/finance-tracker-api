@@ -40,7 +40,6 @@ describe('Create Output', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
-      authorId: user.id,
     })
 
     expect(sut.execute({
@@ -49,7 +48,6 @@ describe('Create Output', () => {
       date: new Date(),
       categoryId: outputCategory.id,
       dashboardId: dashboard.id,
-      authorId: user.id,
     })).resolves.toBeInstanceOf(Output)
   })
 })

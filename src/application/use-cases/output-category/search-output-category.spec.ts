@@ -36,7 +36,6 @@ describe('Search Output Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
-      authorId: user.id,
     })).resolves.toBeInstanceOf(OutputCategory)
   })
 })

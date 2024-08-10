@@ -40,7 +40,6 @@ describe('List Entries', () => {
       title: 'Work',
       color: '#000',
       dashboardId: dashboard.id,
-      authorId: user.id,
     })
 
     const entry = await createEntry.execute({
@@ -49,7 +48,6 @@ describe('List Entries', () => {
       date: new Date(),
       categoryId: entryCategory.id,
       dashboardId: dashboard.id,
-      authorId: user.id,
     })
 
     expect(sut.execute({

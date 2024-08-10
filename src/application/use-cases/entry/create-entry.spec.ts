@@ -49,7 +49,6 @@ describe('Create Entry', () => {
       date: new Date(),
       categoryId: entryCategory.id,
       dashboardId: dashboard.id,
-      authorId: user.id,
     })).resolves.toBeInstanceOf(Entry)
   })
 })

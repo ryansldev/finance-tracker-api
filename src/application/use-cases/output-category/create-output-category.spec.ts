@@ -36,7 +36,6 @@ describe('Create Output Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
-      authorId: author.id,
     })).resolves.toBeInstanceOf(OutputCategory)
   })
 })

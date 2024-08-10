@@ -3,14 +3,11 @@ import { EntryCategoriesRepository } from '../../repositories/entry-categories-r
 import { DashboardsRepository } from '../../repositories/dashboards-repository'
 import { EntryCategoryAlreadyExists } from './errors/EntryCategoryAlreadyExists'
 import { DashboardNotFound } from '../dashboard/errors/DashboardNotFound'
-import { UsersRepository } from '../../repositories/users-repository'
-import { DashboardAuthorNotFound } from '../dashboard/errors/DashboardAuthorNotFound'
 
 interface CreateEntryCategoryRequest {
   title: string;
   color: string;
   dashboardId: string;
-  authorId: string;
 }
 
 type CreateEntryCategoryResponse = EntryCategory
@@ -24,10 +21,9 @@ export class CreateEntryCategory {
   async execute({
     title,
     color,
-    authorId,
     dashboardId,
   }: CreateEntryCategoryRequest): Promise<CreateEntryCategoryResponse> {
-    const dashboard = await this.dashboardsRepository.find(dashboardId, authorId)
+    const dashboard = await this.dashboardsRepository.find(dashboardId)
     if(!dashboard) throw new DashboardNotFound();
 
     const entryCategoryAlreadyExists = await this.entryCategoriesRepository.findByTitle(title)

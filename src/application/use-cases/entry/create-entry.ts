@@ -14,7 +14,6 @@ interface CreateEntryRequest {
   date: Date;
   categoryId: string;
   dashboardId: string;
-  authorId: string;
 }
 
 type CreateEntryResponse = Entry
@@ -33,9 +32,8 @@ export class CreateEntry {
     date,
     categoryId,
     dashboardId,
-    authorId,
   }: CreateEntryRequest): Promise<CreateEntryResponse> {
-    const dashboardAlreadyExists = await this.dashboardsRepository.find(dashboardId, authorId)
+    const dashboardAlreadyExists = await this.dashboardsRepository.find(dashboardId)
     if(!dashboardAlreadyExists) throw new DashboardNotFound()
 
     const categoryAlreadyExists = await this.entryCategoriesRepository.find(categoryId)

@@ -8,8 +8,8 @@ export class InMemoryDashboardsRepository implements DashboardsRepository {
     this.items.push(dashboard)
   }
 
-  async find(dashboardId: string, authorId: string): Promise<Dashboard | undefined> {
-    return this.items.find((dashboard) => dashboard.id === dashboardId && dashboard.authorId === authorId)
+  async find(dashboardId: string): Promise<Dashboard | undefined> {
+    return this.items.find((dashboard) => dashboard.id === dashboardId)
   }
 
   async list(authorId: string): Promise<Dashboard[]> {
