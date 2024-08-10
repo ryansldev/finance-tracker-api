@@ -1,6 +1,10 @@
 import { Entry } from '../../entities/entry'
 import { EntriesRepository } from '../../repositories/entries-repository'
 
+interface ListEntriesRequest {
+  dashboardId: string
+}
+
 type ListEntriesResponse = Entry[]
 
 export class ListEntries {
@@ -8,7 +12,7 @@ export class ListEntries {
     private entriesRepository: EntriesRepository,
   ) {}
 
-  async execute(): Promise<ListEntriesResponse> {
-    return await this.entriesRepository.list()
+  async execute({ dashboardId }: ListEntriesRequest): Promise<ListEntriesResponse> {
+    return await this.entriesRepository.list(dashboardId)
   }
 }

@@ -52,6 +52,8 @@ describe('List Entries', () => {
       authorId: user.id,
     })
 
-    expect(sut.execute()).resolves.toEqual([entry])
+    expect(sut.execute({
+      dashboardId: dashboard.id,
+    })).resolves.toEqual([entry])
   })
 })

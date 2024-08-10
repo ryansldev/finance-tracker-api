@@ -8,8 +8,9 @@ export class InMemoryEntriesRepository implements EntriesRepository {
     this.items.push(entry)
   }
 
-  async list(): Promise<Entry[]> {
-    return this.items.sort((a, b) => {
+  async list(dashboardId: string): Promise<Entry[]> {
+    const items = this.items.filter((item) => item.dashboardId === dashboardId)
+    return items.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
     })
   }
