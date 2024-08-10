@@ -14,8 +14,9 @@ export class InMemoryOutputCategoriesRepository implements OutputCategoriesRepos
     return items.sort((a, b) => a.title.localeCompare(b.title))
   }
 
-  async search(titleToSearch: string): Promise<OutputCategory[]> {
-    return this.items.filter((category) => category.title.includes(titleToSearch))
+  async search(dashboardId: string, titleToSearch: string): Promise<OutputCategory[]> {
+    const outputCategoriesFromDashboard = this.items.filter((outputCategory) => outputCategory.dashboardId === dashboardId)
+    return outputCategoriesFromDashboard.filter((category) => category.title.includes(titleToSearch))
   }
 
   async find(id: string): Promise<OutputCategory | undefined> {
