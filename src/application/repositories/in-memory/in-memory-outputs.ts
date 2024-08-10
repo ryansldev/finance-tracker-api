@@ -8,8 +8,9 @@ export class InMemoryOutputsRepository implements OutputsRepository {
     this.items.push(output)
   }
 
-  async list(): Promise<Output[]> {
-    return this.items.sort((a, b) => {
+  async list(dashboardId: string): Promise<Output[]> {
+    const outputsFromDashboard = this.items.filter((output) => output.dashboardId === dashboardId)
+    return outputsFromDashboard.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
     })
   }

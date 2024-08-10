@@ -2,5 +2,5 @@ import { Output } from '../entities/output'
 
 export interface OutputsRepository {
   create(output: Output): Promise<void>
-  list(): Promise<Output[]>
+  list(dashboardId: string): Promise<Output[]>
 }
