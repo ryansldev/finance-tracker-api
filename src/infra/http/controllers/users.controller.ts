@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { UserViewModel } from '../view-models/user-view-model'
 import { UsersRepository } from '../../../application/repositories/users-repository'
 import { CreateUser } from '../../../application/use-cases/user/create-user'
 import { FindUser } from '../../../application/use-cases/user/find-user'
@@ -48,7 +49,8 @@ export class UsersController {
 
     const { id } = findUserParamsSchema.parse(request.params)
 
-    return await this.findUser.execute({ id })
+    const user = await this.findUser.execute({ id })
+    return UserViewModel.toHTTP(user)
   }
 
   async auth(request: FastifyRequest, reply: FastifyReply) {
@@ -72,7 +74,7 @@ export class UsersController {
     return { token }
   }
 
-  async logout(request: FastifyRequest, reply: FastifyReply) {
+  async logout(_request: FastifyRequest, reply: FastifyReply) {
     reply.clearCookie('access_token')
     return reply.send({ message: 'Logout successfull' })
   }

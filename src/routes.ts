@@ -31,6 +31,10 @@ async function routes (app: FastifyInstance) {
   app.post('/dashboards', {
     preHandler: [app.authenticate],
   }, (request, reply) => dashboardsController.create(request, reply))
+
+  app.get('/dashboards/:id', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => dashboardsController.find(request, reply))
 }
 
 export default routes
