@@ -13,7 +13,7 @@ describe('Find Dashboard', () => {
     const usersRepository = new InMemoryUsersRepository()
     const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
     const createUser = new CreateUser(usersRepository)
-    const sut = new FindDashboard(dashboardsRepository)
+    const sut = new FindDashboard(usersRepository, dashboardsRepository)
 
     const author = await createUser.execute({
       name: 'John',
@@ -27,13 +27,56 @@ describe('Find Dashboard', () => {
       authorId: author.id,
     })
 
-    expect(sut.execute({ id: dashboard.id })).resolves.toBeInstanceOf(Dashboard)
+    expect(sut.execute({ id: dashboard.id, authorId: author.id })).resolves.toBeInstanceOf(Dashboard)
   })
 
-  it('should not be able to find a dashboard that not exists', () => {
+  it('should not be able to find a dashboard that not exists', async () => {
+    const usersRepository = new InMemoryUsersRepository()
     const dashboardsRepository = new InMemoryDashboardsRepository()
-    const sut = new FindDashboard(dashboardsRepository)
 
-    expect(sut.execute({ id: '1' })).rejects.toThrowError(DashboardNotFound)
+    const createUser = new CreateUser(usersRepository)
+    const sut = new FindDashboard(usersRepository, dashboardsRepository)
+
+    const author = await createUser.execute({
+      name: 'John',
+      lastname: 'Doe',
+      email: 'johndoe@gmail.com',
+      password: 'johndoe123'
+    })
+
+    expect(sut.execute({ id: '1', authorId: author.id })).rejects.toThrowError(DashboardNotFound)
+  })
+
+  it('should not be able to find a dashboard from diferent author', async () => {
+    const usersRepository = new InMemoryUsersRepository()
+    const dashboardsRepository = new InMemoryDashboardsRepository()
+
+    const createDashboard = new CreateDashboard(usersRepository, dashboardsRepository)
+    const createUser = new CreateUser(usersRepository)
+    const sut = new FindDashboard(usersRepository, dashboardsRepository)
+
+    const author = await createUser.execute({
+      name: 'John',
+      lastname: 'Doe',
+      email: 'johndoe@gmail.com',
+      password: 'johndoe123'
+    })
+
+    const user = await createUser.execute({
+      name: 'John',
+      lastname: 'Doe 2',
+      email: 'johndoe2@gmail.com',
+      password: 'johndoe1234'
+    })
+
+    const dashboard = await createDashboard.execute({
+      title: 'Personal Finances',
+      authorId: author.id,
+    })
+
+    expect(sut.execute({
+      id: dashboard.id,
+      authorId: user.id,
+    })).rejects.toThrow(DashboardNotFound)
   })
 })

@@ -8,6 +8,7 @@ interface CreateEntryCategoryRequest {
   title: string;
   color: string;
   dashboardId: string;
+  authorId: string;
 }
 
 type CreateEntryCategoryResponse = EntryCategory
@@ -22,8 +23,9 @@ export class CreateEntryCategory {
     title,
     color,
     dashboardId,
+    authorId,
   }: CreateEntryCategoryRequest): Promise<CreateEntryCategoryResponse> {
-    const dashboard = await this.dashboardsRepository.find(dashboardId)
+    const dashboard = await this.dashboardsRepository.find(dashboardId, authorId)
     if(!dashboard) throw new DashboardNotFound();
 
     const entryCategoryAlreadyExists = await this.entryCategoriesRepository.findByTitle(title)

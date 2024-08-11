@@ -37,19 +37,30 @@ describe('Create Entry Category', () => {
       title: 'Transport',
       color: '#000',
       dashboardId: dashboard.id,
+      authorId: author.id,
     })).resolves.toBeInstanceOf(EntryCategory)
   })
 
-  it('should not be able to create a entry category with a dashboard that not exists', () => {
+  it('should not be able to create a entry category with a dashboard that not exists', async () => {
+    const usersRepository = new InMemoryUsersRepository()
     const dashboardsRepository = new InMemoryDashboardsRepository()
     const entryCategoryRepository = new InMemoryEntryCategoriesRepository()
 
+    const createUser = new CreateUser(usersRepository)
     const sut = new CreateEntryCategory(dashboardsRepository, entryCategoryRepository)
+
+    const user = await createUser.execute({
+      name: 'John',
+      lastname: 'Doe',
+      email: 'johndoe@gmail.com',
+      password: 'johndoe123'
+    })
 
     expect(sut.execute({
       title: 'Transport',
       color: '#000',
       dashboardId: '123',
+      authorId: user.id,
     })).rejects.toThrowError(DashboardNotFound)
   })
 })
