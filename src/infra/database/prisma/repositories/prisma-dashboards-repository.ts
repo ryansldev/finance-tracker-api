@@ -16,10 +16,11 @@ export class PrismaDashboardsRepository implements DashboardsRepository {
     })
   }
 
-  async find(dashboardId: string): Promise<Dashboard | undefined> {
+  async find(dashboardId: string, authorId: string): Promise<Dashboard | undefined> {
     const dashboard = await this.prisma.dashboard.findFirst({
       where: {
         id: dashboardId,
+        authorId,
       }
     })
 
