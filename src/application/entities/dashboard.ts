@@ -8,23 +8,25 @@ interface DashboardProps {
   description?: string;
   authorId: User["id"];
   createdAt: Date;
-  updatedAt?: Date;
+  updatedAt: Date;
 }
 
 type DashboardPropsBody = Replace<DashboardProps, {
   id?: string;
   createdAt?: Date;
+  updatedAt?: Date;
 }>
 
 export class Dashboard {
   private props: DashboardProps
 
   constructor(props: DashboardPropsBody) {
+    const actualDate = new Date()
     this.props = {
       id: props.id ?? randomUUID(),
       ...props,
-      createdAt: props.createdAt ?? new Date(),
-      updatedAt: props.updatedAt,
+      createdAt: props.createdAt ?? actualDate,
+      updatedAt: props.updatedAt ?? actualDate,
     };
   }
 
@@ -56,7 +58,7 @@ export class Dashboard {
     return this.props.createdAt
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date {
     return this.props.updatedAt
   }
 
