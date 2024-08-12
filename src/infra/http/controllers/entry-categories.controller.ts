@@ -20,14 +20,19 @@ export class EntryCategoriesController {
   }
 
   async create(request: FastifyRequest, _reply: FastifyReply) {
-    const createEntryCategoriesBodySchema = z.object({
-      title: z.string(),
-      color: z.string().length(7).regex(/^#/),
+    const { id: authorId } = request.user
+
+    const createEntryCategoryParamsSchema = z.object({
       dashboardId: z.string().uuid(),
-      authorId: z.string().uuid(),
     })
 
-    const { title, color, dashboardId, authorId } = createEntryCategoriesBodySchema.parse(request.body)
+    const createEntryCategoryBodySchema = z.object({
+      title: z.string(),
+      color: z.string().length(7).regex(/^#/),
+    })
+
+    const { dashboardId } = createEntryCategoryParamsSchema.parse(request.params)
+    const { title, color } = createEntryCategoryBodySchema.parse(request.body)
 
     await this.createEntryCategory.execute({
       title,
