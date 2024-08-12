@@ -78,10 +78,10 @@ model Output {
 }
 
 model OutputCategory {
-  id          String     @id @default(uuid())
-  title       String     @unique
+  id          String    @id @default(uuid())
+  title       String    @unique
   color       String
   outputs     Output[]
-  dashboard   Dashboard? @relation(fields: [dashboardId], references: [id])
-  dashboardId String?
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
+  dashboardId String
 }
