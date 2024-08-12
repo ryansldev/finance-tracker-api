@@ -3,13 +3,13 @@ import { Dashboard } from "../../../application/entities/dashboard";
 interface DashboardHTTP {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export class DashboardViewModel {
-  static toHTTP(dashboard: Dashboard) {
+  static toHTTP(dashboard: Dashboard): DashboardHTTP {
     return {
       id: dashboard.id,
       title: dashboard.title,

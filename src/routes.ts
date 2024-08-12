@@ -8,15 +8,20 @@ const prisma = new PrismaClient({
 
 import { PrismaUsersRepository } from './infra/database/prisma/repositories/prisma-users-repository'
 import { PrismaDashboardsRepository } from './infra/database/prisma/repositories/prisma-dashboards-repository'
+import { PrismaEntryCategoriesRepository } from './infra/database/prisma/repositories/prisma-entry-categories-repository'
 
 import { UsersController } from "./infra/http/controllers/users.controller"
 import { DashboardsController } from "./infra/http/controllers/dashboards.controller"
+import { EntryCategoriesController } from './infra/http/controllers/entry-categories.controller'
 
 const usersRepository = new PrismaUsersRepository(prisma)
 const usersController = new UsersController(usersRepository)
 
 const dashboardsRepository = new PrismaDashboardsRepository(prisma)
 const dashboardsController = new DashboardsController(usersRepository, dashboardsRepository)
+
+const entryCategoriesRepository = new PrismaEntryCategoriesRepository(prisma)
+const entryCategoriesController = new EntryCategoriesController(dashboardsRepository, entryCategoriesRepository)
 
 async function routes (app: FastifyInstance) {
   app.post('/users', (request, reply) => usersController.create(request, reply))
@@ -39,6 +44,14 @@ async function routes (app: FastifyInstance) {
   app.get('/dashboards/:id', {
     preHandler: [app.authenticate]
   }, (request, reply) => dashboardsController.find(request, reply))
+
+  app.post('/entries/categories', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => entryCategoriesController.create(request, reply))
+
+  app.get('/entries/categories/:dashboardId/search/:titleToSearch', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => entryCategoriesController.search(request, reply))
 }
 
 export default routes
