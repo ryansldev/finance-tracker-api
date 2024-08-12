@@ -8,12 +8,7 @@ export class PrismaUsersRepository implements UsersRepository {
 
   async create(user: User): Promise<void> {
     await this.prisma.user.create({
-      data: {
-        name: user.name,
-        lastname: user.lastname,
-        email: user.email,
-        password: user.password,
-      }
+      data: PrismaUserMapper.toPrisma(user)
     })
   }
 

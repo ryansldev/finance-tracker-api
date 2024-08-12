@@ -8,15 +8,7 @@ export class PrismaEntriesRepository implements EntriesRepository {
 
   async create(entry: Entry): Promise<void> {
     await this.prisma.entry.create({
-      data: {
-        id: entry.id,
-        title: entry.title,
-        value: entry.value,
-        date: entry.date,
-        description: entry.description,
-        dashboardId: entry.dashboardId,
-        categoryId: entry.categoryId,
-      }
+      data: PrismaEntriesMapper.toPrisma(entry)
     })
   }
 

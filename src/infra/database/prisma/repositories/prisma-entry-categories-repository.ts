@@ -8,12 +8,7 @@ export class PrismaEntryCategoriesRepository implements EntryCategoriesRepositor
 
   async create(entryCategory: EntryCategory): Promise<void> {
     await this.prisma.entryCategory.create({
-      data: {
-        id: entryCategory.id,
-        title: entryCategory.title,
-        color: entryCategory.color,
-        dashboardId: entryCategory.dashboardId,
-      }
+      data: PrismaEntryCategoriesMapper.toPrisma(entryCategory)
     })
   }
 
@@ -80,11 +75,7 @@ export class PrismaEntryCategoriesRepository implements EntryCategoriesRepositor
       where: {
         id: entryCategory.id,
       },
-      data: {
-        title: entryCategory.title,
-        color: entryCategory.color,
-        dashboardId: entryCategory.dashboardId,
-      }
+      data: PrismaEntryCategoriesMapper.toPrisma(entryCategory)
     })
   }
 }

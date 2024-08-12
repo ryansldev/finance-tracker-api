@@ -8,11 +8,7 @@ export class PrismaDashboardsRepository implements DashboardsRepository {
 
   async create(dashboard: Dashboard): Promise<void> {
     await this.prisma.dashboard.create({
-      data: {
-        title: dashboard.title,
-        description: dashboard.description,
-        authorId: dashboard.authorId,
-      }
+      data: PrismaDashboardMapper.toPrisma(dashboard)
     })
   }
 
@@ -40,15 +36,11 @@ export class PrismaDashboardsRepository implements DashboardsRepository {
   }
 
   async save(dashboard: Dashboard): Promise<void> {
-    await this.prisma.dashboard.updateMany({
-      data: {
+    await this.prisma.dashboard.update({
+      where: {
         id: dashboard.id,
-        title: dashboard.title,
-        description: dashboard.description,
-        authorId: dashboard.authorId,
-        createdAt: dashboard.createdAt,
-        updatedAt: dashboard.updatedAt
-      }
+      },
+      data: PrismaDashboardMapper.toPrisma(dashboard),
     })
   }
 }
