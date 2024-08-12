@@ -48,7 +48,7 @@ export class DashboardsController {
     return dashboards.map(DashboardViewModel.toHTTP)
   }
 
-  async find(request: FastifyRequest, reply: FastifyReply) {
+  async find(request: FastifyRequest, _reply: FastifyReply) {
     const { id: userId } = request.user
 
     const findDashboardParamsSchema = z.object({
