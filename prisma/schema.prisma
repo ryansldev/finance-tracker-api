@@ -43,6 +43,7 @@ model Entry {
   id          String   @id @default(uuid())
   date        DateTime @default(now())
   value       Float
+  title       String
   description String?
 
   dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
@@ -66,6 +67,7 @@ model Output {
   id          String   @id @default(uuid())
   date        DateTime @default(now())
   value       Float
+  title       String
   description String?
 
   dashboard   Dashboard @relation(fields: [dashboardId], references: [id])
