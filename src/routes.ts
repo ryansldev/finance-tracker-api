@@ -11,12 +11,14 @@ import { PrismaDashboardsRepository } from './infra/database/prisma/repositories
 import { PrismaEntryCategoriesRepository } from './infra/database/prisma/repositories/prisma-entry-categories-repository'
 import { PrismaEntriesRepository } from './infra/database/prisma/repositories/prisma-entries-repository'
 import { PrismaOutputCategoriesRepository } from './infra/database/prisma/repositories/prisma-output-categories-repository'
+import { PrismaOutputsRepository } from './infra/database/prisma/repositories/prisma-outputs-repository'
 
 import { UsersController } from "./infra/http/controllers/users.controller"
 import { DashboardsController } from "./infra/http/controllers/dashboards.controller"
 import { EntryCategoriesController } from './infra/http/controllers/entry-categories.controller'
 import { EntriesController } from "./infra/http/controllers/entries.controller"
 import { OutputCategoriesController } from './infra/http/controllers/output-categories.controller'
+import { OutputsController } from "./infra/http/controllers/outputs.controller"
 
 const usersRepository = new PrismaUsersRepository(prisma)
 const usersController = new UsersController(usersRepository)
@@ -32,6 +34,9 @@ const entriesController = new EntriesController(dashboardsRepository, entryCateg
 
 const outputCategoriesRepository = new PrismaOutputCategoriesRepository(prisma)
 const outputCategoriesController = new OutputCategoriesController(dashboardsRepository, outputCategoriesRepository)
+
+const outputsRepository = new PrismaOutputsRepository(prisma)
+const outputsController = new OutputsController(dashboardsRepository, outputCategoriesRepository, outputsRepository)
 
 async function routes (app: FastifyInstance) {
   // USER
@@ -80,6 +85,11 @@ async function routes (app: FastifyInstance) {
   app.get('/dashboards/:dashboardId/outputs/categories/search/:titleToSearch', {
     preHandler: [app.authenticate]
   }, (request, reply) => outputCategoriesController.search(request, reply))
+
+  // OUTPUT
+  app.post('/dashboards/:dashboardId/outputs', {
+    preHandler: [app.authenticate],
+  }, (request, reply) => outputsController.create(request, reply))
 }
 
 export default routes
