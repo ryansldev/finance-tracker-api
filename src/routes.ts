@@ -10,11 +10,13 @@ import { PrismaUsersRepository } from './infra/database/prisma/repositories/pris
 import { PrismaDashboardsRepository } from './infra/database/prisma/repositories/prisma-dashboards-repository'
 import { PrismaEntryCategoriesRepository } from './infra/database/prisma/repositories/prisma-entry-categories-repository'
 import { PrismaEntriesRepository } from './infra/database/prisma/repositories/prisma-entries-repository'
+import { PrismaOutputCategoriesRepository } from './infra/database/prisma/repositories/prisma-output-categories-repository'
 
 import { UsersController } from "./infra/http/controllers/users.controller"
 import { DashboardsController } from "./infra/http/controllers/dashboards.controller"
 import { EntryCategoriesController } from './infra/http/controllers/entry-categories.controller'
 import { EntriesController } from "./infra/http/controllers/entries.controller"
+import { OutputCategoriesController } from './infra/http/controllers/output-categories.controller'
 
 const usersRepository = new PrismaUsersRepository(prisma)
 const usersController = new UsersController(usersRepository)
@@ -27,6 +29,9 @@ const entryCategoriesController = new EntryCategoriesController(dashboardsReposi
 
 const entriesRepository = new PrismaEntriesRepository(prisma)
 const entriesController = new EntriesController(dashboardsRepository, entryCategoriesRepository, entriesRepository)
+
+const outputCategoriesRepository = new PrismaOutputCategoriesRepository(prisma)
+const outputCategoriesController = new OutputCategoriesController(dashboardsRepository, outputCategoriesRepository)
 
 async function routes (app: FastifyInstance) {
   // USER
@@ -66,6 +71,15 @@ async function routes (app: FastifyInstance) {
   app.get('/dashboards/:dashboardId/entries', {
     preHandler: [app.authenticate]
   }, (request, reply) => entriesController.list(request, reply))
+
+  // OUTPUT CATEGORY
+  app.post('/dashboards/:dashboardId/outputs/categories', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => outputCategoriesController.create(request, reply))
+
+  app.get('/dashboards/:dashboardId/outputs/categories/search/:titleToSearch', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => outputCategoriesController.search(request, reply))
 }
 
 export default routes
