@@ -38,14 +38,9 @@ export class GetDashboardBalance {
     })
 
     let total = 0;
-    for (let index = 0; index < entries.length; index++) {
-      const entry = entries[index];
-      total = total + entry.value
-    }
-
-    for (let index = 0; index < outputs.length; index++) {
-      const output = outputs[index];
-      total = total - output.value
+    for (let index = 0; index < transactions.length; index++) {
+      const item = transactions[index];
+      total = total + item.value
     }
 
     return {

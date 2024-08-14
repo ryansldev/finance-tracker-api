@@ -23,6 +23,7 @@ export class Output {
     this.props = {
       id: props.id ?? randomUUID(),
       ...props,
+      value: props.value >= 0 ? -props.value : props.value,
       date: props.date ?? new Date(),
     }
   }

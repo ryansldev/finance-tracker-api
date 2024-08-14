@@ -21,21 +21,17 @@ import { OutputCategoriesController } from './infra/http/controllers/output-cate
 import { OutputsController } from "./infra/http/controllers/outputs.controller"
 
 const usersRepository = new PrismaUsersRepository(prisma)
-const usersController = new UsersController(usersRepository)
-
 const dashboardsRepository = new PrismaDashboardsRepository(prisma)
-const dashboardsController = new DashboardsController(usersRepository, dashboardsRepository)
-
 const entryCategoriesRepository = new PrismaEntryCategoriesRepository(prisma)
-const entryCategoriesController = new EntryCategoriesController(dashboardsRepository, entryCategoriesRepository)
-
 const entriesRepository = new PrismaEntriesRepository(prisma)
-const entriesController = new EntriesController(dashboardsRepository, entryCategoriesRepository, entriesRepository)
-
 const outputCategoriesRepository = new PrismaOutputCategoriesRepository(prisma)
-const outputCategoriesController = new OutputCategoriesController(dashboardsRepository, outputCategoriesRepository)
-
 const outputsRepository = new PrismaOutputsRepository(prisma)
+
+const usersController = new UsersController(usersRepository)
+const dashboardsController = new DashboardsController(usersRepository, dashboardsRepository, entriesRepository, outputsRepository)
+const entryCategoriesController = new EntryCategoriesController(dashboardsRepository, entryCategoriesRepository)
+const entriesController = new EntriesController(dashboardsRepository, entryCategoriesRepository, entriesRepository)
+const outputCategoriesController = new OutputCategoriesController(dashboardsRepository, outputCategoriesRepository)
 const outputsController = new OutputsController(dashboardsRepository, outputCategoriesRepository, outputsRepository)
 
 async function routes (app: FastifyInstance) {
@@ -59,9 +55,12 @@ async function routes (app: FastifyInstance) {
   app.get('/dashboards/:id', {
     preHandler: [app.authenticate]
   }, (request, reply) => dashboardsController.find(request, reply))
+  app.get('/dashboards/:id/balance', {
+    preHandler: [app.authenticate]
+  }, (request, reply) => dashboardsController.balance(request, reply))
 
   // ENTRY CATEGORY
-  app.post('/dashboards/:dashboardId/entries/categories', {
+  app.post('/dashboards/:id/entries/categories', {
     preHandler: [app.authenticate]
   }, (request, reply) => entryCategoriesController.create(request, reply))
   app.get('/dashboards/:dashboardId/entries/categories/search/:titleToSearch', {
