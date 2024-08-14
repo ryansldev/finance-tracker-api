@@ -23,7 +23,7 @@ export class Output {
     this.props = {
       id: props.id ?? randomUUID(),
       ...props,
-      date: new Date(),
+      date: props.date ?? new Date(),
     }
   }
 
